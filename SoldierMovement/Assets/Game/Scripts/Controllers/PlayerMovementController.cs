@@ -42,7 +42,7 @@ namespace Scripts.Controllers
             characterController.Move(_velocity * Time.deltaTime);
         }
 
-        private void Jump_started(InputAction.CallbackContext obj)
+        public void OnJumpStarted()
         {
             if (_isGrounded)
             {
