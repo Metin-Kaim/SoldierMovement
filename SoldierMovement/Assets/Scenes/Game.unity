@@ -290,10 +290,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 198203689}
+  camPoint: {fileID: 1838320438}
   speed: 10
-  mouseSensitivity: 100
   jumpHeight: 3
   gravityForce: 2
+  camMaxUpDegree: 30
+  camMaxDownDegree: 30
 --- !u!143 &198203689
 CharacterController:
   m_ObjectHideFlags: 0
@@ -343,6 +345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 242223641}
   - component: {fileID: 242223643}
+  - component: {fileID: 242223644}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -378,6 +381,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputController: {fileID: 195220611}
+--- !u!114 &242223644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242223640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c762cbd2302300f438059ef24d3890cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSensitivity: 200
 --- !u!1 &321756379
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +405,7 @@ GameObject:
   - component: {fileID: 321756380}
   - component: {fileID: 321756381}
   - component: {fileID: 321756382}
+  - component: {fileID: 321756383}
   m_Layer: 0
   m_Name: Signals
   m_TagString: Untagged
@@ -433,6 +450,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f58f1dba0a3b1947bdaa1cac1324847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &321756383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321756379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5a24f8356f6384da473c42eed7c0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &359667724
@@ -1227,7 +1256,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 359667725}
-  - {fileID: 2132410954}
   - {fileID: 321756380}
   - {fileID: 242223641}
   - {fileID: 195220610}
+  - {fileID: 2132410954}

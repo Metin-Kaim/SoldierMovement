@@ -1,6 +1,5 @@
 ﻿using Assets.Game.Scripts.Signals;
 using Scripts.Controllers;
-using System.Collections;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Managers
@@ -12,11 +11,14 @@ namespace Assets.Game.Scripts.Managers
         private void OnEnable()
         {
             PlayerSignals.Instance.onJumpStarted += playerMovementController.OnJumpStarted;
+            CoreGameSignals.Instance.onSetMouseSensitivity += playerMovementController.UpdateMouseSens;
+
         }
 
         private void OnDisable()
         {
             PlayerSignals.Instance.onJumpStarted -= playerMovementController.OnJumpStarted;
+            CoreGameSignals.Instance.onSetMouseSensitivity -= playerMovementController.UpdateMouseSens;
         }
     }
 }

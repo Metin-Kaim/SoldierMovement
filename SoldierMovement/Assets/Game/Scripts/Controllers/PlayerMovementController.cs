@@ -1,7 +1,6 @@
 using Assets.Game.Scripts.Controllers;
 using Assets.Game.Scripts.Signals;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Scripts.Controllers
 {
@@ -9,17 +8,24 @@ namespace Scripts.Controllers
     {
         private const float GRAVITY = -9.81f;
 
+        [Header("References")]
         [SerializeField] private CharacterController characterController;
+        [SerializeField] private Transform camPoint;
+        [Header("Settings")]
         [SerializeField] private float speed = 5f;
-        [SerializeField] private float mouseSensitivity = 3f;
         [SerializeField] private float jumpHeight = 2f;
         [SerializeField] private float gravityForce = 4;
+        [SerializeField] private float camMaxUpDegree;
+        [SerializeField] private float camMaxDownDegree;
 
         private Vector3 _velocity;
         private bool _isGrounded;
+        private Vector3 _camDirection;
+        private float _mouseSensitivity;
 
         private void Update()
         {
+            #region Check Is Ground And Apply Fake Gravity
             // Yerde olup olmadýðýný kontrol et
             _isGrounded = characterController.isGrounded;
 
@@ -27,9 +33,13 @@ namespace Scripts.Controllers
             {
                 _velocity.y = -2f; // Yerdeyken hafif bir kuvvet uygulanýyor
             }
+            #endregion
 
+            #region Get All Inputs
             AllInputs allInputs = InputSignals.Instance.onGetAllInputs.Invoke();
+            #endregion
 
+            #region Character Movement By Camera Rotation
             // Kameranýn yönünü al
             Vector3 cameraForward = Camera.main.transform.forward;
             Vector3 cameraRight = Camera.main.transform.right;
@@ -51,16 +61,31 @@ namespace Scripts.Controllers
             }
 
             characterController.Move(speed * Time.deltaTime * move);
+            #endregion
 
-
+            #region Character X Axis Rotation
             // Mouse ile karakteri döndür
-            transform.Rotate(mouseSensitivity * Time.deltaTime * new Vector3(0, allInputs.rotateValue.x, 0));
+            transform.Rotate(_mouseSensitivity * Time.deltaTime * new Vector3(0, allInputs.rotateValue.x, 0));
+            #endregion
 
+            #region Camera Up/Down Rotation
+            _camDirection -= _mouseSensitivity / 1.5f * Time.deltaTime * new Vector3(allInputs.rotateValue.y, 0, 0);
+            _camDirection.x = Mathf.Clamp(_camDirection.x, -camMaxUpDegree, camMaxDownDegree);
+
+            camPoint.localEulerAngles = _camDirection;
+            #endregion
+
+            #region Jump
             // Yer çekimi uygula
             _velocity.y += GRAVITY * Time.deltaTime * gravityForce;
             characterController.Move(_velocity * Time.deltaTime);
+            #endregion
         }
 
+        public void UpdateMouseSens(float mouseSens)
+        {
+            _mouseSensitivity = mouseSens;
+        }
 
         public void OnJumpStarted()
         {
