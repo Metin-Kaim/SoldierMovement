@@ -1,6 +1,6 @@
 ﻿[x] Mouse hassasiyetini player'dan ayır.  
-[>] Cursor kilitle.
-[*] Karakter ekle.
+[x] Cursor kilitle.
+[>] Karakter ekle.
 [*] Silah ekle.
 [*] Silah'ı karakterin eline yerleştir.
 [*] Animasyon ekle. (Soldier)
