@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerIdleAimState : PlayerBaseState
+public class PlayerAimState : PlayerBaseState
 {
     public override void EnterState(PlayerStateManager player)
     {

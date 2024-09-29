@@ -13,7 +13,7 @@ public class PlayerIdleState : PlayerBaseState
     {
         if (player.playerManager.isAiming)
         {
-            player.SwitchState(player.aimIdleState);
+            player.SwitchState(player.aimState);
         }
     }
 }

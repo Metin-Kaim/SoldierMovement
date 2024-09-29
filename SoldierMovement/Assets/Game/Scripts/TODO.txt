@@ -3,6 +3,7 @@
 [x] Karakter ekle.
 [>] Animasyon ekle. (Soldier)
 	[xx] Idle
+	[xx] Aim
 	[>>] Yürüme
 	[>>] Koşma
 	[>>] Zıplama

@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlayerStateManager : MonoBehaviour
 {
     PlayerBaseState currentState;
-    public PlayerIdleState idleState = new PlayerIdleState();
-    public PlayerIdleAimState aimIdleState = new PlayerIdleAimState();
+    public PlayerIdleState idleState = new();
+    public PlayerAimState aimState = new();
 
     public PlayerManager playerManager;
 
