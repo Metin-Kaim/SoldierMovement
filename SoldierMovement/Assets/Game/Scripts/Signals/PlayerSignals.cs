@@ -10,6 +10,7 @@ namespace Assets.Game.Scripts.Signals
         public static PlayerSignals Instance;
 
         public UnityAction onJumpStarted;
+        public UnityAction<bool> onAiming;
 
         private void Awake()
         {

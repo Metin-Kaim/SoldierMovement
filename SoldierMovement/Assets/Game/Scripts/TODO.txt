@@ -1,17 +1,17 @@
 ﻿[x] Mouse hassasiyetini player'dan ayır.  
 [x] Cursor kilitle.
-[>] Karakter ekle.
+[x] Karakter ekle.
+[>] Animasyon ekle. (Soldier)
+	[xx] Idle
+	[>>] Yürüme
+	[>>] Koşma
+	[>>] Zıplama
+	[>>] Eğilme
+	[>>] Sürünme
+	[>>] Ateş etme
+	[>>] Şarjör doldurma
 [*] Silah ekle.
 [*] Silah'ı karakterin eline yerleştir.
-[*] Animasyon ekle. (Soldier)
-	[**] Idle
-	[**] Yürüme
-	[**] Koşma
-	[**] Zıplama
-	[**] Eğilme
-	[**] Sürünme
-	[**] Ateş etme
-	[**] Şarjör doldurma
 [*] Animasyonları inputlara bağla. (Hareket için ilk olarak mixlemeyi dene. Olmazsa 8 yönlü hareket sistemi yaz.)
 [*] Şarjör doldurma algoritması yaz.
 [*] UI ekle.

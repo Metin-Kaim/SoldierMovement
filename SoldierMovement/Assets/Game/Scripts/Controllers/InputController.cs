@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Signals;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,16 +14,25 @@ namespace Assets.Game.Scripts.Controllers
 
         private void Awake()
         {
-
             _playerMovement = new PlayerMovement();
             _playerMovement.Player.Movement.Enable();
             _playerMovement.Player.Rotate.Enable();
             _playerMovement.Player.Jump.Enable();
             _playerMovement.Player.Jump.started += Jump_started;
+            _playerMovement.Player.Aim.Enable();
+            _playerMovement.Player.Aim.performed += Aim_performed;
+            _playerMovement.Player.Aim.canceled += Aim_canceled;
         }
 
+        private void Aim_canceled(InputAction.CallbackContext context)
+        {
+            PlayerSignals.Instance.onAiming?.Invoke(false);
+        }
 
-
+        private void Aim_performed(InputAction.CallbackContext obj)
+        {
+            PlayerSignals.Instance.onAiming?.Invoke(true);
+        }
 
         private void Update()
         {
@@ -46,5 +56,6 @@ namespace Assets.Game.Scripts.Controllers
     {
         public Vector2 moveValue;
         public Vector2 rotateValue;
+
     }
 }
