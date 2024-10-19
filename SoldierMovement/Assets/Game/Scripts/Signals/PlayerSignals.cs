@@ -9,8 +9,9 @@ namespace Assets.Game.Scripts.Signals
     {
         public static PlayerSignals Instance;
 
-        public UnityAction onJumpStarted;
+        public UnityAction<bool> onJumpStarted;
         public UnityAction<bool> onAiming;
+        public UnityAction<bool> onWalking;
 
         private void Awake()
         {

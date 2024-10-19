@@ -16,12 +16,25 @@ namespace Assets.Game.Scripts.Controllers
         {
             _playerMovement = new PlayerMovement();
             _playerMovement.Player.Movement.Enable();
+            _playerMovement.Player.Movement.performed += Movement_performed;
+            _playerMovement.Player.Movement.canceled += Movement_canceled;
             _playerMovement.Player.Rotate.Enable();
             _playerMovement.Player.Jump.Enable();
             _playerMovement.Player.Jump.started += Jump_started;
+            _playerMovement.Player.Jump.canceled += Jump_started;
             _playerMovement.Player.Aim.Enable();
             _playerMovement.Player.Aim.performed += Aim_performed;
             _playerMovement.Player.Aim.canceled += Aim_canceled;
+        }
+
+        private void Movement_canceled(InputAction.CallbackContext obj)
+        {
+            PlayerSignals.Instance.onWalking?.Invoke(false);
+        }
+
+        private void Movement_performed(InputAction.CallbackContext obj)
+        {
+            PlayerSignals.Instance.onWalking?.Invoke(true);
         }
 
         private void Aim_canceled(InputAction.CallbackContext context)
@@ -42,7 +55,7 @@ namespace Assets.Game.Scripts.Controllers
 
         public void Jump_started(InputAction.CallbackContext obj)
         {
-            PlayerSignals.Instance.onJumpStarted?.Invoke();
+            PlayerSignals.Instance.onJumpStarted?.Invoke(obj.phase != InputActionPhase.Canceled);
         }
 
         public AllInputs OnGetAllInputs()

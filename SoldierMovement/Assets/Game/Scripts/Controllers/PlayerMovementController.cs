@@ -23,6 +23,8 @@ namespace Scripts.Controllers
         private Vector3 _camDirection;
         private float _mouseSensitivity;
 
+        public bool IsGrounded => _isGrounded;
+
         private void Update()
         {
             #region Check Is Ground And Apply Fake Gravity
@@ -36,8 +38,38 @@ namespace Scripts.Controllers
             #endregion
 
             #region Get All Inputs
-            AllInputs allInputs = InputSignals.Instance.onGetAllInputs.Invoke();
+            AllInputs allInputs = GetAllInputs();
             #endregion
+
+            //HandleMovement(allInputs);
+            #region Character X Axis Rotation
+            // Mouse ile karakteri döndür
+            transform.Rotate(_mouseSensitivity * Time.deltaTime * new Vector3(0, allInputs.rotateValue.x, 0));
+            #endregion
+
+            #region Camera Up/Down Rotation
+            _camDirection -= _mouseSensitivity / 1.5f * Time.deltaTime * new Vector3(allInputs.rotateValue.y, 0, 0);
+            _camDirection.x = Mathf.Clamp(_camDirection.x, -camMaxUpDegree, camMaxDownDegree);
+
+            camPoint.localEulerAngles = _camDirection;
+            #endregion
+
+            //HandleJump();
+            #region Aplly Gravity
+            // Yer çekimi uygula
+            _velocity.y += GRAVITY * Time.deltaTime * gravityForce;
+            characterController.Move(_velocity * Time.deltaTime);
+            #endregion
+        }
+
+        private static AllInputs GetAllInputs()
+        {
+            return InputSignals.Instance.onGetAllInputs.Invoke();
+        }
+
+        public void HandleMovement()
+        {
+            AllInputs allInputs = GetAllInputs();
 
             #region Character Movement By Camera Rotation
             // Kameranýn yönünü al
@@ -62,24 +94,6 @@ namespace Scripts.Controllers
 
             characterController.Move(speed * Time.deltaTime * move);
             #endregion
-
-            #region Character X Axis Rotation
-            // Mouse ile karakteri döndür
-            transform.Rotate(_mouseSensitivity * Time.deltaTime * new Vector3(0, allInputs.rotateValue.x, 0));
-            #endregion
-
-            #region Camera Up/Down Rotation
-            _camDirection -= _mouseSensitivity / 1.5f * Time.deltaTime * new Vector3(allInputs.rotateValue.y, 0, 0);
-            _camDirection.x = Mathf.Clamp(_camDirection.x, -camMaxUpDegree, camMaxDownDegree);
-
-            camPoint.localEulerAngles = _camDirection;
-            #endregion
-
-            #region Jump
-            // Yer çekimi uygula
-            _velocity.y += GRAVITY * Time.deltaTime * gravityForce;
-            characterController.Move(_velocity * Time.deltaTime);
-            #endregion
         }
 
         public void UpdateMouseSens(float mouseSens)
@@ -87,7 +101,7 @@ namespace Scripts.Controllers
             _mouseSensitivity = mouseSens;
         }
 
-        public void OnJumpStarted()
+        public void HandleJump()
         {
             if (_isGrounded)
             {

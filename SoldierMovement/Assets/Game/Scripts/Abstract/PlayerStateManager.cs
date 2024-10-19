@@ -3,27 +3,38 @@ using UnityEngine;
 
 public class PlayerStateManager : MonoBehaviour
 {
-    PlayerBaseState currentState;
-    public PlayerIdleState idleState = new();
-    public PlayerAimState aimState = new();
+    private PlayerBaseState _currentState;
+
+    public PlayerBaseState IdleState { get; private set; }
+    public PlayerBaseState AimState { get; private set; }
+    public PlayerBaseState WalkState { get; private set; }
+    public PlayerBaseState JumpState { get; private set; }
 
     public PlayerManager playerManager;
 
+    private void Awake()
+    {
+        IdleState = new PlayerIdleState(playerManager.playerMovementController);
+        AimState = new PlayerAimState(playerManager.playerMovementController);
+        WalkState = new PlayerWalkState(playerManager.playerMovementController);
+        JumpState = new PlayerJumpState(playerManager.playerMovementController);
+    }
+
     private void Start()
     {
-        currentState = idleState;
-
-        currentState.EnterState(this);
+        _currentState = IdleState;
+        _currentState.EnterState(this);
     }
 
     private void Update()
     {
-        currentState.UpdateState(this);
+        _currentState.UpdateState(this);
     }
 
-    public void SwitchState(PlayerBaseState state)
+    public void SwitchState(PlayerBaseState newState)
     {
-        currentState = state;
-        state.EnterState(this);
+        _currentState.ExitState(this);
+        _currentState = newState;
+        _currentState.EnterState(this);
     }
 }
